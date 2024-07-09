@@ -11,22 +11,15 @@ export async function GET(
 
 
     const r = await prisma.film.findMany({
-        include: {
-            film_actor: {
-                select: {
-                    actor: {
-                        select: {
-                            first_name: true,
-                            last_name: true,
-                            actor_id: true}}}}},
+        include: {film_actor: {
+            select: {actor: {
+                select: {first_name: true,
+                         last_name: true,
+                         actor_id: true}}}}},
         where: {
             OR: [
-                {title: {
-                    contains: search_str,
-                    mode: "insensitive"}},
-                {description: {
-                    contains: search_str,
-                    mode: "insensitive"}}]}});
+                {title: {contains: search_str, mode: "insensitive"}},
+                {description: {contains: search_str, mode: "insensitive"}}]}});
 
     const films = r.map((f) => relation_flatten_and_linkify({
         obj: f,
