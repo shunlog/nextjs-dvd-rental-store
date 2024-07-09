@@ -14,7 +14,7 @@ Install npm dependencies:
 npm install
 ```
 
-## Runnng
+## Running
 
 To run the development server:
 
@@ -23,3 +23,20 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+## REST API
+
+The API can be accessed via the `/api` route:
+
+### Films
+
+#### **GET** `/api/films`
+
+Get a list of all movies.
+
+### Actors
+
+#### **GET** `/api/actors`
+
+Get a list of all actors.
