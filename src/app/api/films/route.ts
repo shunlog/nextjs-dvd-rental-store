@@ -7,9 +7,9 @@ export async function GET(
 ) {
     const searchParams = req.nextUrl.searchParams;
     const searchString = searchParams.get('search_string') || '';
-    console.log(searchString);
+    const origin = req.nextUrl.origin;  // http://localhost:3000
 
-    const films = await films_filter(searchString);
+    const films = await films_filter(searchString, origin);
 
     return NextResponse.json(films);
 }

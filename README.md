@@ -27,7 +27,34 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## REST API
 
-The API can be accessed via the `/api` route:
+The API can be accessed via the `/api` route.
+
+It tries to include hypermedia links wherever possible, as specified in the [RESTful JSON](https://restfuljson.org/) guideline.
+This means you should be able to travel to any related resource from a single URL.
+For example, the result for `GET /api/films?search_string=south` includes URLs for the related actors of the film:
+``` json
+[
+  {
+    "film_id": 823,
+    "title": "SOUTH WAIT",
+    "actors": [
+      {
+        "id": 70,
+        "url": "http://localhost:3000/api/actors/70",
+        "first_name": "MICHELLE",
+        "last_name": "MCCONAUGHEY"
+      },
+      {
+        "id": 73,
+        "url": "http://localhost:3000/api/actors/73",
+        "first_name": "GARY",
+        "last_name": "PENN"
+      }
+    ],
+    ...
+  }
+]
+```
 
 ### Films
 
@@ -46,3 +73,7 @@ Get a list of all movies.
 #### **GET** `/api/actors`
 
 Get a list of all actors.
+
+#### **GET** `/api/actors/:id`
+
+Get an actor by id.

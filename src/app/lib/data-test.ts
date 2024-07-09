@@ -99,7 +99,16 @@ async function movies_with_actor_first_name(fn: string){
 
 
 async function main(){
-    console.dir(await films_filter("jaws"));
+    // console.dir(await films_filter("jaws"));
+
+    // here's how to compine URL pahts:
+    // const u = new URL("/api/actor", 'http://localhost:3000');
+    // const u = new URL("/api/actor", '');
+    // const u2 = new URL('./123', u);
+    // console.log(u2);
+
+    const l = await films_filter('jaws', 'http://localhost:3000');
+    console.dir(l, {depth: 3});
 }
 
 main();
