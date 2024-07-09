@@ -1,4 +1,5 @@
-import prisma from './prisma_client'
+import prisma from './prisma_client';
+import {films_filter} from './data';
 
 export async function fetchFilms(limit = 5) {
     const allFilms = await prisma.film.findMany({take: limit});
@@ -96,21 +97,9 @@ async function movies_with_actor_first_name(fn: string){
     console.dir(r, {depth: null});
 }
 
-async function films_filter(search_str: string){
-    const r = await prisma.film.findMany({
-        where: {
-            OR: [
-                {title: {
-                    contains: search_str,
-                    mode: "insensitive"}},
-                {description: {
-                    contains: search_str,
-                    mode: "insensitive"}}]}});
-    console.dir(r, {depth: 2});
-}
 
 async function main(){
-    films_filter("jaws");
+    console.dir(await films_filter("jaws"));
 }
 
 main();
