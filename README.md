@@ -35,6 +35,12 @@ The API can be accessed via the `/api` route:
 
 Get a list of all movies.
 
+##### Query parameters
+
+| Name          | Type   | Default | Description                                                              |
+|---------------|--------|---------|--------------------------------------------------------------------------|
+| search_string | string | ""      | Filter movies by an occurrence of the string in the title or description |
+
 ### Actors
 
 #### **GET** `/api/actors`
