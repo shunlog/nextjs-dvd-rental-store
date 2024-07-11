@@ -7,7 +7,7 @@ export async function GET(
 ) {
     const actor_id = Number(params.id);
     const actor = await prisma.actor.findUnique({
-        where: {actor_id: actor_id}});
+        where: {actor_id: actor_id},});
 
     return NextResponse.json(actor);
 }

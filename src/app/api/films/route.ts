@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import prisma from '@/app/lib/prisma_client'
-import {relation_flatten_and_linkify} from '@/app/lib/data'
+import { linkify_list } from '../../lib/data';
 
 export async function GET(
     req: NextRequest,
@@ -10,25 +10,24 @@ export async function GET(
     const origin = req.nextUrl.origin;  // http://localhost:3000
 
 
-    const r = await prisma.film.findMany({
-        include: {film_actor: {
-            select: {actor: {
-                select: {first_name: true,
-                         last_name: true,
-                         actor_id: true}}}}},
+    const ls = await prisma.film.findMany({
+        select: {
+            film_id: true,
+            title: true,
+            description: true
+        },
         where: {
             OR: [
                 {title: {contains: search_str, mode: "insensitive"}},
                 {description: {contains: search_str, mode: "insensitive"}}]}});
 
-    const films = r.map((f) => relation_flatten_and_linkify({
-        obj: f,
-        rel_table: "film_actor",
-        res_obj_field: "actor",
-        res_id_field: "actor_id",
-        res_name: "actor",
-        ls_name: "actors",
-        origin: origin}));
 
-    return NextResponse.json(films);
+    const ls2 = linkify_list({
+        ls: ls,
+        res_name: "film",
+        id_field: "film_id",
+        origin: origin
+    })
+
+    return NextResponse.json(ls2);
 }
